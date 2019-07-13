@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.dao.SupplierProductMapper" >
+  <resultMap id="BaseResultMap" type="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.SupplierProduct" >
+    <id column="pk_spid" property="pkSpid" jdbcType="BIGINT" />
+    <result column="supplier_name" property="supplierName" jdbcType="VARCHAR" />
+    <result column="supplier_tel" property="supplierTel" jdbcType="VARCHAR" />
+    <result column="pk_pid" property="pkPid" jdbcType="BIGINT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.SupplierProduct" extends="BaseResultMap" >
+    <result column="supplier_addr" property="supplierAddr" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    pk_spid, supplier_name, supplier_tel, pk_pid
+  </sql>
+  <sql id="Blob_Column_List" >
+    supplier_addr
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.SupplierProductExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from xt_supplier_product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.SupplierProductExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from xt_supplier_product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from xt_supplier_product
+    where pk_spid = #{pkSpid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from xt_supplier_product
+    where pk_spid = #{pkSpid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.SupplierProductExample" >
+    delete from xt_supplier_product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.SupplierProduct" >
+    insert into xt_supplier_product (pk_spid, supplier_name, supplier_tel, 
+      pk_pid, supplier_addr)
+    values (#{pkSpid,jdbcType=BIGINT}, #{supplierName,jdbcType=VARCHAR}, #{supplierTel,jdbcType=VARCHAR}, 
+      #{pkPid,jdbcType=BIGINT}, #{supplierAddr,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.SupplierProduct" >
+    insert into xt_supplier_product
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkSpid != null" >
+        pk_spid,
+      </if>
+      <if test="supplierName != null" >
+        supplier_name,
+      </if>
+      <if test="supplierTel != null" >
+        supplier_tel,
+      </if>
+      <if test="pkPid != null" >
+        pk_pid,
+      </if>
+      <if test="supplierAddr != null" >
+        supplier_addr,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkSpid != null" >
+        #{pkSpid,jdbcType=BIGINT},
+      </if>
+      <if test="supplierName != null" >
+        #{supplierName,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierTel != null" >
+        #{supplierTel,jdbcType=VARCHAR},
+      </if>
+      <if test="pkPid != null" >
+        #{pkPid,jdbcType=BIGINT},
+      </if>
+      <if test="supplierAddr != null" >
+        #{supplierAddr,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.SupplierProductExample" resultType="java.lang.Integer" >
+    select count(*) from xt_supplier_product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update xt_supplier_product
+    <set >
+      <if test="record.pkSpid != null" >
+        pk_spid = #{record.pkSpid,jdbcType=BIGINT},
+      </if>
+      <if test="record.supplierName != null" >
+        supplier_name = #{record.supplierName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supplierTel != null" >
+        supplier_tel = #{record.supplierTel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pkPid != null" >
+        pk_pid = #{record.pkPid,jdbcType=BIGINT},
+      </if>
+      <if test="record.supplierAddr != null" >
+        supplier_addr = #{record.supplierAddr,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update xt_supplier_product
+    set pk_spid = #{record.pkSpid,jdbcType=BIGINT},
+      supplier_name = #{record.supplierName,jdbcType=VARCHAR},
+      supplier_tel = #{record.supplierTel,jdbcType=VARCHAR},
+      pk_pid = #{record.pkPid,jdbcType=BIGINT},
+      supplier_addr = #{record.supplierAddr,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update xt_supplier_product
+    set pk_spid = #{record.pkSpid,jdbcType=BIGINT},
+      supplier_name = #{record.supplierName,jdbcType=VARCHAR},
+      supplier_tel = #{record.supplierTel,jdbcType=VARCHAR},
+      pk_pid = #{record.pkPid,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.SupplierProduct" >
+    update xt_supplier_product
+    <set >
+      <if test="supplierName != null" >
+        supplier_name = #{supplierName,jdbcType=VARCHAR},
+      </if>
+      <if test="supplierTel != null" >
+        supplier_tel = #{supplierTel,jdbcType=VARCHAR},
+      </if>
+      <if test="pkPid != null" >
+        pk_pid = #{pkPid,jdbcType=BIGINT},
+      </if>
+      <if test="supplierAddr != null" >
+        supplier_addr = #{supplierAddr,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where pk_spid = #{pkSpid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.SupplierProduct" >
+    update xt_supplier_product
+    set supplier_name = #{supplierName,jdbcType=VARCHAR},
+      supplier_tel = #{supplierTel,jdbcType=VARCHAR},
+      pk_pid = #{pkPid,jdbcType=BIGINT},
+      supplier_addr = #{supplierAddr,jdbcType=LONGVARCHAR}
+    where pk_spid = #{pkSpid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.SupplierProduct" >
+    update xt_supplier_product
+    set supplier_name = #{supplierName,jdbcType=VARCHAR},
+      supplier_tel = #{supplierTel,jdbcType=VARCHAR},
+      pk_pid = #{pkPid,jdbcType=BIGINT}
+    where pk_spid = #{pkSpid,jdbcType=BIGINT}
+  </update>
+</mapper>

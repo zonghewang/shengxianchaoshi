@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.dao.OutgoingRecordMapper" >
+  <resultMap id="BaseResultMap" type="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.OutgoingRecord" >
+    <id column="pk_orid" property="pkOrid" jdbcType="BIGINT" />
+    <result column="pk_sid" property="pkSid" jdbcType="BIGINT" />
+    <result column="is_going" property="isGoing" jdbcType="TINYINT" />
+    <result column="outgoing_record_time" property="outgoingRecordTime" jdbcType="TIMESTAMP" />
+    <result column="pk_bid" property="pkBid" jdbcType="BIGINT" />
+    <result column="pk_pid" property="pkPid" jdbcType="BIGINT" />
+    <result column="outgoing_record_num" property="outgoingRecordNum" jdbcType="INTEGER" />
+    <result column="pk_uid" property="pkUid" jdbcType="BIGINT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.OutgoingRecord" extends="BaseResultMap" >
+    <result column="outgoing_record_result" property="outgoingRecordResult" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    pk_orid, pk_sid, is_going, outgoing_record_time, pk_bid, pk_pid, outgoing_record_num, 
+    pk_uid
+  </sql>
+  <sql id="Blob_Column_List" >
+    outgoing_record_result
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.OutgoingRecordExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from xt_outgoing_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.OutgoingRecordExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from xt_outgoing_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from xt_outgoing_record
+    where pk_orid = #{pkOrid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from xt_outgoing_record
+    where pk_orid = #{pkOrid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.OutgoingRecordExample" >
+    delete from xt_outgoing_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.OutgoingRecord" >
+    insert into xt_outgoing_record (pk_orid, pk_sid, is_going, 
+      outgoing_record_time, pk_bid, pk_pid, 
+      outgoing_record_num, pk_uid, outgoing_record_result
+      )
+    values (#{pkOrid,jdbcType=BIGINT}, #{pkSid,jdbcType=BIGINT}, #{isGoing,jdbcType=TINYINT}, 
+      #{outgoingRecordTime,jdbcType=TIMESTAMP}, #{pkBid,jdbcType=BIGINT}, #{pkPid,jdbcType=BIGINT}, 
+      #{outgoingRecordNum,jdbcType=INTEGER}, #{pkUid,jdbcType=BIGINT}, #{outgoingRecordResult,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.OutgoingRecord" >
+    insert into xt_outgoing_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkOrid != null" >
+        pk_orid,
+      </if>
+      <if test="pkSid != null" >
+        pk_sid,
+      </if>
+      <if test="isGoing != null" >
+        is_going,
+      </if>
+      <if test="outgoingRecordTime != null" >
+        outgoing_record_time,
+      </if>
+      <if test="pkBid != null" >
+        pk_bid,
+      </if>
+      <if test="pkPid != null" >
+        pk_pid,
+      </if>
+      <if test="outgoingRecordNum != null" >
+        outgoing_record_num,
+      </if>
+      <if test="pkUid != null" >
+        pk_uid,
+      </if>
+      <if test="outgoingRecordResult != null" >
+        outgoing_record_result,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkOrid != null" >
+        #{pkOrid,jdbcType=BIGINT},
+      </if>
+      <if test="pkSid != null" >
+        #{pkSid,jdbcType=BIGINT},
+      </if>
+      <if test="isGoing != null" >
+        #{isGoing,jdbcType=TINYINT},
+      </if>
+      <if test="outgoingRecordTime != null" >
+        #{outgoingRecordTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pkBid != null" >
+        #{pkBid,jdbcType=BIGINT},
+      </if>
+      <if test="pkPid != null" >
+        #{pkPid,jdbcType=BIGINT},
+      </if>
+      <if test="outgoingRecordNum != null" >
+        #{outgoingRecordNum,jdbcType=INTEGER},
+      </if>
+      <if test="pkUid != null" >
+        #{pkUid,jdbcType=BIGINT},
+      </if>
+      <if test="outgoingRecordResult != null" >
+        #{outgoingRecordResult,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.OutgoingRecordExample" resultType="java.lang.Integer" >
+    select count(*) from xt_outgoing_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update xt_outgoing_record
+    <set >
+      <if test="record.pkOrid != null" >
+        pk_orid = #{record.pkOrid,jdbcType=BIGINT},
+      </if>
+      <if test="record.pkSid != null" >
+        pk_sid = #{record.pkSid,jdbcType=BIGINT},
+      </if>
+      <if test="record.isGoing != null" >
+        is_going = #{record.isGoing,jdbcType=TINYINT},
+      </if>
+      <if test="record.outgoingRecordTime != null" >
+        outgoing_record_time = #{record.outgoingRecordTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.pkBid != null" >
+        pk_bid = #{record.pkBid,jdbcType=BIGINT},
+      </if>
+      <if test="record.pkPid != null" >
+        pk_pid = #{record.pkPid,jdbcType=BIGINT},
+      </if>
+      <if test="record.outgoingRecordNum != null" >
+        outgoing_record_num = #{record.outgoingRecordNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.pkUid != null" >
+        pk_uid = #{record.pkUid,jdbcType=BIGINT},
+      </if>
+      <if test="record.outgoingRecordResult != null" >
+        outgoing_record_result = #{record.outgoingRecordResult,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update xt_outgoing_record
+    set pk_orid = #{record.pkOrid,jdbcType=BIGINT},
+      pk_sid = #{record.pkSid,jdbcType=BIGINT},
+      is_going = #{record.isGoing,jdbcType=TINYINT},
+      outgoing_record_time = #{record.outgoingRecordTime,jdbcType=TIMESTAMP},
+      pk_bid = #{record.pkBid,jdbcType=BIGINT},
+      pk_pid = #{record.pkPid,jdbcType=BIGINT},
+      outgoing_record_num = #{record.outgoingRecordNum,jdbcType=INTEGER},
+      pk_uid = #{record.pkUid,jdbcType=BIGINT},
+      outgoing_record_result = #{record.outgoingRecordResult,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update xt_outgoing_record
+    set pk_orid = #{record.pkOrid,jdbcType=BIGINT},
+      pk_sid = #{record.pkSid,jdbcType=BIGINT},
+      is_going = #{record.isGoing,jdbcType=TINYINT},
+      outgoing_record_time = #{record.outgoingRecordTime,jdbcType=TIMESTAMP},
+      pk_bid = #{record.pkBid,jdbcType=BIGINT},
+      pk_pid = #{record.pkPid,jdbcType=BIGINT},
+      outgoing_record_num = #{record.outgoingRecordNum,jdbcType=INTEGER},
+      pk_uid = #{record.pkUid,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.OutgoingRecord" >
+    update xt_outgoing_record
+    <set >
+      <if test="pkSid != null" >
+        pk_sid = #{pkSid,jdbcType=BIGINT},
+      </if>
+      <if test="isGoing != null" >
+        is_going = #{isGoing,jdbcType=TINYINT},
+      </if>
+      <if test="outgoingRecordTime != null" >
+        outgoing_record_time = #{outgoingRecordTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pkBid != null" >
+        pk_bid = #{pkBid,jdbcType=BIGINT},
+      </if>
+      <if test="pkPid != null" >
+        pk_pid = #{pkPid,jdbcType=BIGINT},
+      </if>
+      <if test="outgoingRecordNum != null" >
+        outgoing_record_num = #{outgoingRecordNum,jdbcType=INTEGER},
+      </if>
+      <if test="pkUid != null" >
+        pk_uid = #{pkUid,jdbcType=BIGINT},
+      </if>
+      <if test="outgoingRecordResult != null" >
+        outgoing_record_result = #{outgoingRecordResult,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where pk_orid = #{pkOrid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.OutgoingRecord" >
+    update xt_outgoing_record
+    set pk_sid = #{pkSid,jdbcType=BIGINT},
+      is_going = #{isGoing,jdbcType=TINYINT},
+      outgoing_record_time = #{outgoingRecordTime,jdbcType=TIMESTAMP},
+      pk_bid = #{pkBid,jdbcType=BIGINT},
+      pk_pid = #{pkPid,jdbcType=BIGINT},
+      outgoing_record_num = #{outgoingRecordNum,jdbcType=INTEGER},
+      pk_uid = #{pkUid,jdbcType=BIGINT},
+      outgoing_record_result = #{outgoingRecordResult,jdbcType=LONGVARCHAR}
+    where pk_orid = #{pkOrid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.OutgoingRecord" >
+    update xt_outgoing_record
+    set pk_sid = #{pkSid,jdbcType=BIGINT},
+      is_going = #{isGoing,jdbcType=TINYINT},
+      outgoing_record_time = #{outgoingRecordTime,jdbcType=TIMESTAMP},
+      pk_bid = #{pkBid,jdbcType=BIGINT},
+      pk_pid = #{pkPid,jdbcType=BIGINT},
+      outgoing_record_num = #{outgoingRecordNum,jdbcType=INTEGER},
+      pk_uid = #{pkUid,jdbcType=BIGINT}
+    where pk_orid = #{pkOrid,jdbcType=BIGINT}
+  </update>
+</mapper>

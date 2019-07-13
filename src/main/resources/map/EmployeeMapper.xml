@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.dao.EmployeeMapper" >
+  <resultMap id="BaseResultMap" type="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.Employee" >
+    <id column="pk_eid" property="pkEid" jdbcType="BIGINT" />
+    <result column="pk_uid" property="pkUid" jdbcType="BIGINT" />
+    <result column="emp_no" property="empNo" jdbcType="VARCHAR" />
+    <result column="emp_name" property="empName" jdbcType="VARCHAR" />
+    <result column="emp_sex" property="empSex" jdbcType="TINYINT" />
+    <result column="emp_age" property="empAge" jdbcType="TINYINT" />
+    <result column="emp_tel" property="empTel" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    pk_eid, pk_uid, emp_no, emp_name, emp_sex, emp_age, emp_tel
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.EmployeeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from xt_employee
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from xt_employee
+    where pk_eid = #{pkEid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from xt_employee
+    where pk_eid = #{pkEid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.EmployeeExample" >
+    delete from xt_employee
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.Employee" >
+    insert into xt_employee (pk_eid, pk_uid, emp_no, 
+      emp_name, emp_sex, emp_age, 
+      emp_tel)
+    values (#{pkEid,jdbcType=BIGINT}, #{pkUid,jdbcType=BIGINT}, #{empNo,jdbcType=VARCHAR}, 
+      #{empName,jdbcType=VARCHAR}, #{empSex,jdbcType=TINYINT}, #{empAge,jdbcType=TINYINT}, 
+      #{empTel,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.Employee" >
+    insert into xt_employee
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkEid != null" >
+        pk_eid,
+      </if>
+      <if test="pkUid != null" >
+        pk_uid,
+      </if>
+      <if test="empNo != null" >
+        emp_no,
+      </if>
+      <if test="empName != null" >
+        emp_name,
+      </if>
+      <if test="empSex != null" >
+        emp_sex,
+      </if>
+      <if test="empAge != null" >
+        emp_age,
+      </if>
+      <if test="empTel != null" >
+        emp_tel,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkEid != null" >
+        #{pkEid,jdbcType=BIGINT},
+      </if>
+      <if test="pkUid != null" >
+        #{pkUid,jdbcType=BIGINT},
+      </if>
+      <if test="empNo != null" >
+        #{empNo,jdbcType=VARCHAR},
+      </if>
+      <if test="empName != null" >
+        #{empName,jdbcType=VARCHAR},
+      </if>
+      <if test="empSex != null" >
+        #{empSex,jdbcType=TINYINT},
+      </if>
+      <if test="empAge != null" >
+        #{empAge,jdbcType=TINYINT},
+      </if>
+      <if test="empTel != null" >
+        #{empTel,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.EmployeeExample" resultType="java.lang.Integer" >
+    select count(*) from xt_employee
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update xt_employee
+    <set >
+      <if test="record.pkEid != null" >
+        pk_eid = #{record.pkEid,jdbcType=BIGINT},
+      </if>
+      <if test="record.pkUid != null" >
+        pk_uid = #{record.pkUid,jdbcType=BIGINT},
+      </if>
+      <if test="record.empNo != null" >
+        emp_no = #{record.empNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.empName != null" >
+        emp_name = #{record.empName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.empSex != null" >
+        emp_sex = #{record.empSex,jdbcType=TINYINT},
+      </if>
+      <if test="record.empAge != null" >
+        emp_age = #{record.empAge,jdbcType=TINYINT},
+      </if>
+      <if test="record.empTel != null" >
+        emp_tel = #{record.empTel,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update xt_employee
+    set pk_eid = #{record.pkEid,jdbcType=BIGINT},
+      pk_uid = #{record.pkUid,jdbcType=BIGINT},
+      emp_no = #{record.empNo,jdbcType=VARCHAR},
+      emp_name = #{record.empName,jdbcType=VARCHAR},
+      emp_sex = #{record.empSex,jdbcType=TINYINT},
+      emp_age = #{record.empAge,jdbcType=TINYINT},
+      emp_tel = #{record.empTel,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.Employee" >
+    update xt_employee
+    <set >
+      <if test="pkUid != null" >
+        pk_uid = #{pkUid,jdbcType=BIGINT},
+      </if>
+      <if test="empNo != null" >
+        emp_no = #{empNo,jdbcType=VARCHAR},
+      </if>
+      <if test="empName != null" >
+        emp_name = #{empName,jdbcType=VARCHAR},
+      </if>
+      <if test="empSex != null" >
+        emp_sex = #{empSex,jdbcType=TINYINT},
+      </if>
+      <if test="empAge != null" >
+        emp_age = #{empAge,jdbcType=TINYINT},
+      </if>
+      <if test="empTel != null" >
+        emp_tel = #{empTel,jdbcType=CHAR},
+      </if>
+    </set>
+    where pk_eid = #{pkEid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.Employee" >
+    update xt_employee
+    set pk_uid = #{pkUid,jdbcType=BIGINT},
+      emp_no = #{empNo,jdbcType=VARCHAR},
+      emp_name = #{empName,jdbcType=VARCHAR},
+      emp_sex = #{empSex,jdbcType=TINYINT},
+      emp_age = #{empAge,jdbcType=TINYINT},
+      emp_tel = #{empTel,jdbcType=CHAR}
+    where pk_eid = #{pkEid,jdbcType=BIGINT}
+  </update>
+</mapper>

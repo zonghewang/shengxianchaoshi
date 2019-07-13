@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.dao.SalesOrderMapper" >
+  <resultMap id="BaseResultMap" type="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.SalesOrder" >
+    <id column="pk_soid" property="pkSoid" jdbcType="BIGINT" />
+    <result column="sales_order_time" property="salesOrderTime" jdbcType="TIMESTAMP" />
+    <result column="pk_uid" property="pkUid" jdbcType="BIGINT" />
+    <result column="sales_order_pay" property="salesOrderPay" jdbcType="DECIMAL" />
+    <result column="pk_cid" property="pkCid" jdbcType="BIGINT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.SalesOrder" extends="BaseResultMap" >
+    <result column="sales_order_info" property="salesOrderInfo" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    pk_soid, sales_order_time, pk_uid, sales_order_pay, pk_cid
+  </sql>
+  <sql id="Blob_Column_List" >
+    sales_order_info
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.SalesOrderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from xt_sales_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.SalesOrderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from xt_sales_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from xt_sales_order
+    where pk_soid = #{pkSoid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from xt_sales_order
+    where pk_soid = #{pkSoid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.SalesOrderExample" >
+    delete from xt_sales_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.SalesOrder" >
+    insert into xt_sales_order (pk_soid, sales_order_time, pk_uid, 
+      sales_order_pay, pk_cid, sales_order_info
+      )
+    values (#{pkSoid,jdbcType=BIGINT}, #{salesOrderTime,jdbcType=TIMESTAMP}, #{pkUid,jdbcType=BIGINT}, 
+      #{salesOrderPay,jdbcType=DECIMAL}, #{pkCid,jdbcType=BIGINT}, #{salesOrderInfo,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.SalesOrder" >
+    insert into xt_sales_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkSoid != null" >
+        pk_soid,
+      </if>
+      <if test="salesOrderTime != null" >
+        sales_order_time,
+      </if>
+      <if test="pkUid != null" >
+        pk_uid,
+      </if>
+      <if test="salesOrderPay != null" >
+        sales_order_pay,
+      </if>
+      <if test="pkCid != null" >
+        pk_cid,
+      </if>
+      <if test="salesOrderInfo != null" >
+        sales_order_info,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkSoid != null" >
+        #{pkSoid,jdbcType=BIGINT},
+      </if>
+      <if test="salesOrderTime != null" >
+        #{salesOrderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pkUid != null" >
+        #{pkUid,jdbcType=BIGINT},
+      </if>
+      <if test="salesOrderPay != null" >
+        #{salesOrderPay,jdbcType=DECIMAL},
+      </if>
+      <if test="pkCid != null" >
+        #{pkCid,jdbcType=BIGINT},
+      </if>
+      <if test="salesOrderInfo != null" >
+        #{salesOrderInfo,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.SalesOrderExample" resultType="java.lang.Integer" >
+    select count(*) from xt_sales_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update xt_sales_order
+    <set >
+      <if test="record.pkSoid != null" >
+        pk_soid = #{record.pkSoid,jdbcType=BIGINT},
+      </if>
+      <if test="record.salesOrderTime != null" >
+        sales_order_time = #{record.salesOrderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.pkUid != null" >
+        pk_uid = #{record.pkUid,jdbcType=BIGINT},
+      </if>
+      <if test="record.salesOrderPay != null" >
+        sales_order_pay = #{record.salesOrderPay,jdbcType=DECIMAL},
+      </if>
+      <if test="record.pkCid != null" >
+        pk_cid = #{record.pkCid,jdbcType=BIGINT},
+      </if>
+      <if test="record.salesOrderInfo != null" >
+        sales_order_info = #{record.salesOrderInfo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update xt_sales_order
+    set pk_soid = #{record.pkSoid,jdbcType=BIGINT},
+      sales_order_time = #{record.salesOrderTime,jdbcType=TIMESTAMP},
+      pk_uid = #{record.pkUid,jdbcType=BIGINT},
+      sales_order_pay = #{record.salesOrderPay,jdbcType=DECIMAL},
+      pk_cid = #{record.pkCid,jdbcType=BIGINT},
+      sales_order_info = #{record.salesOrderInfo,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update xt_sales_order
+    set pk_soid = #{record.pkSoid,jdbcType=BIGINT},
+      sales_order_time = #{record.salesOrderTime,jdbcType=TIMESTAMP},
+      pk_uid = #{record.pkUid,jdbcType=BIGINT},
+      sales_order_pay = #{record.salesOrderPay,jdbcType=DECIMAL},
+      pk_cid = #{record.pkCid,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.SalesOrder" >
+    update xt_sales_order
+    <set >
+      <if test="salesOrderTime != null" >
+        sales_order_time = #{salesOrderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pkUid != null" >
+        pk_uid = #{pkUid,jdbcType=BIGINT},
+      </if>
+      <if test="salesOrderPay != null" >
+        sales_order_pay = #{salesOrderPay,jdbcType=DECIMAL},
+      </if>
+      <if test="pkCid != null" >
+        pk_cid = #{pkCid,jdbcType=BIGINT},
+      </if>
+      <if test="salesOrderInfo != null" >
+        sales_order_info = #{salesOrderInfo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where pk_soid = #{pkSoid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.SalesOrder" >
+    update xt_sales_order
+    set sales_order_time = #{salesOrderTime,jdbcType=TIMESTAMP},
+      pk_uid = #{pkUid,jdbcType=BIGINT},
+      sales_order_pay = #{salesOrderPay,jdbcType=DECIMAL},
+      pk_cid = #{pkCid,jdbcType=BIGINT},
+      sales_order_info = #{salesOrderInfo,jdbcType=LONGVARCHAR}
+    where pk_soid = #{pkSoid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.SalesOrder" >
+    update xt_sales_order
+    set sales_order_time = #{salesOrderTime,jdbcType=TIMESTAMP},
+      pk_uid = #{pkUid,jdbcType=BIGINT},
+      sales_order_pay = #{salesOrderPay,jdbcType=DECIMAL},
+      pk_cid = #{pkCid,jdbcType=BIGINT}
+    where pk_soid = #{pkSoid,jdbcType=BIGINT}
+  </update>
+</mapper>

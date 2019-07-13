@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.dao.BuyInfoMapper" >
+  <resultMap id="BaseResultMap" type="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.BuyInfo" >
+    <id column="pk_biid" property="pkBiid" jdbcType="BIGINT" />
+    <result column="pk_bid" property="pkBid" jdbcType="BIGINT" />
+    <result column="pk_pid" property="pkPid" jdbcType="BIGINT" />
+    <result column="pk_spid" property="pkSpid" jdbcType="BIGINT" />
+    <result column="buy_info_num" property="buyInfoNum" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.BuyInfo" extends="BaseResultMap" >
+    <result column="buy_info_other" property="buyInfoOther" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    pk_biid, pk_bid, pk_pid, pk_spid, buy_info_num
+  </sql>
+  <sql id="Blob_Column_List" >
+    buy_info_other
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.BuyInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from xt_buy_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.BuyInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from xt_buy_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from xt_buy_info
+    where pk_biid = #{pkBiid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from xt_buy_info
+    where pk_biid = #{pkBiid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.BuyInfoExample" >
+    delete from xt_buy_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.BuyInfo" >
+    insert into xt_buy_info (pk_biid, pk_bid, pk_pid, 
+      pk_spid, buy_info_num, buy_info_other
+      )
+    values (#{pkBiid,jdbcType=BIGINT}, #{pkBid,jdbcType=BIGINT}, #{pkPid,jdbcType=BIGINT}, 
+      #{pkSpid,jdbcType=BIGINT}, #{buyInfoNum,jdbcType=INTEGER}, #{buyInfoOther,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.BuyInfo" >
+    insert into xt_buy_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkBiid != null" >
+        pk_biid,
+      </if>
+      <if test="pkBid != null" >
+        pk_bid,
+      </if>
+      <if test="pkPid != null" >
+        pk_pid,
+      </if>
+      <if test="pkSpid != null" >
+        pk_spid,
+      </if>
+      <if test="buyInfoNum != null" >
+        buy_info_num,
+      </if>
+      <if test="buyInfoOther != null" >
+        buy_info_other,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkBiid != null" >
+        #{pkBiid,jdbcType=BIGINT},
+      </if>
+      <if test="pkBid != null" >
+        #{pkBid,jdbcType=BIGINT},
+      </if>
+      <if test="pkPid != null" >
+        #{pkPid,jdbcType=BIGINT},
+      </if>
+      <if test="pkSpid != null" >
+        #{pkSpid,jdbcType=BIGINT},
+      </if>
+      <if test="buyInfoNum != null" >
+        #{buyInfoNum,jdbcType=INTEGER},
+      </if>
+      <if test="buyInfoOther != null" >
+        #{buyInfoOther,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.BuyInfoExample" resultType="java.lang.Integer" >
+    select count(*) from xt_buy_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update xt_buy_info
+    <set >
+      <if test="record.pkBiid != null" >
+        pk_biid = #{record.pkBiid,jdbcType=BIGINT},
+      </if>
+      <if test="record.pkBid != null" >
+        pk_bid = #{record.pkBid,jdbcType=BIGINT},
+      </if>
+      <if test="record.pkPid != null" >
+        pk_pid = #{record.pkPid,jdbcType=BIGINT},
+      </if>
+      <if test="record.pkSpid != null" >
+        pk_spid = #{record.pkSpid,jdbcType=BIGINT},
+      </if>
+      <if test="record.buyInfoNum != null" >
+        buy_info_num = #{record.buyInfoNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.buyInfoOther != null" >
+        buy_info_other = #{record.buyInfoOther,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update xt_buy_info
+    set pk_biid = #{record.pkBiid,jdbcType=BIGINT},
+      pk_bid = #{record.pkBid,jdbcType=BIGINT},
+      pk_pid = #{record.pkPid,jdbcType=BIGINT},
+      pk_spid = #{record.pkSpid,jdbcType=BIGINT},
+      buy_info_num = #{record.buyInfoNum,jdbcType=INTEGER},
+      buy_info_other = #{record.buyInfoOther,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update xt_buy_info
+    set pk_biid = #{record.pkBiid,jdbcType=BIGINT},
+      pk_bid = #{record.pkBid,jdbcType=BIGINT},
+      pk_pid = #{record.pkPid,jdbcType=BIGINT},
+      pk_spid = #{record.pkSpid,jdbcType=BIGINT},
+      buy_info_num = #{record.buyInfoNum,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.BuyInfo" >
+    update xt_buy_info
+    <set >
+      <if test="pkBid != null" >
+        pk_bid = #{pkBid,jdbcType=BIGINT},
+      </if>
+      <if test="pkPid != null" >
+        pk_pid = #{pkPid,jdbcType=BIGINT},
+      </if>
+      <if test="pkSpid != null" >
+        pk_spid = #{pkSpid,jdbcType=BIGINT},
+      </if>
+      <if test="buyInfoNum != null" >
+        buy_info_num = #{buyInfoNum,jdbcType=INTEGER},
+      </if>
+      <if test="buyInfoOther != null" >
+        buy_info_other = #{buyInfoOther,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where pk_biid = #{pkBiid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.BuyInfo" >
+    update xt_buy_info
+    set pk_bid = #{pkBid,jdbcType=BIGINT},
+      pk_pid = #{pkPid,jdbcType=BIGINT},
+      pk_spid = #{pkSpid,jdbcType=BIGINT},
+      buy_info_num = #{buyInfoNum,jdbcType=INTEGER},
+      buy_info_other = #{buyInfoOther,jdbcType=LONGVARCHAR}
+    where pk_biid = #{pkBiid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.BuyInfo" >
+    update xt_buy_info
+    set pk_bid = #{pkBid,jdbcType=BIGINT},
+      pk_pid = #{pkPid,jdbcType=BIGINT},
+      pk_spid = #{pkSpid,jdbcType=BIGINT},
+      buy_info_num = #{buyInfoNum,jdbcType=INTEGER}
+    where pk_biid = #{pkBiid,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.dao.BuyMapper" >
+  <resultMap id="BaseResultMap" type="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.Buy" >
+    <id column="pk_bid" property="pkBid" jdbcType="BIGINT" />
+    <result column="buy_name" property="buyName" jdbcType="VARCHAR" />
+    <result column="buy_time" property="buyTime" jdbcType="TIMESTAMP" />
+    <result column="pk_uid" property="pkUid" jdbcType="BIGINT" />
+    <result column="is_seasonal" property="isSeasonal" jdbcType="TINYINT" />
+    <result column="is_in_storehouse" property="isInStorehouse" jdbcType="TINYINT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.Buy" extends="BaseResultMap" >
+    <result column="buy_info" property="buyInfo" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    pk_bid, buy_name, buy_time, pk_uid, is_seasonal, is_in_storehouse
+  </sql>
+  <sql id="Blob_Column_List" >
+    buy_info
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.BuyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from xt_buy
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.BuyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from xt_buy
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from xt_buy
+    where pk_bid = #{pkBid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from xt_buy
+    where pk_bid = #{pkBid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.BuyExample" >
+    delete from xt_buy
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.Buy" >
+    insert into xt_buy (pk_bid, buy_name, buy_time, 
+      pk_uid, is_seasonal, is_in_storehouse, 
+      buy_info)
+    values (#{pkBid,jdbcType=BIGINT}, #{buyName,jdbcType=VARCHAR}, #{buyTime,jdbcType=TIMESTAMP}, 
+      #{pkUid,jdbcType=BIGINT}, #{isSeasonal,jdbcType=TINYINT}, #{isInStorehouse,jdbcType=TINYINT}, 
+      #{buyInfo,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.Buy" >
+    insert into xt_buy
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkBid != null" >
+        pk_bid,
+      </if>
+      <if test="buyName != null" >
+        buy_name,
+      </if>
+      <if test="buyTime != null" >
+        buy_time,
+      </if>
+      <if test="pkUid != null" >
+        pk_uid,
+      </if>
+      <if test="isSeasonal != null" >
+        is_seasonal,
+      </if>
+      <if test="isInStorehouse != null" >
+        is_in_storehouse,
+      </if>
+      <if test="buyInfo != null" >
+        buy_info,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkBid != null" >
+        #{pkBid,jdbcType=BIGINT},
+      </if>
+      <if test="buyName != null" >
+        #{buyName,jdbcType=VARCHAR},
+      </if>
+      <if test="buyTime != null" >
+        #{buyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pkUid != null" >
+        #{pkUid,jdbcType=BIGINT},
+      </if>
+      <if test="isSeasonal != null" >
+        #{isSeasonal,jdbcType=TINYINT},
+      </if>
+      <if test="isInStorehouse != null" >
+        #{isInStorehouse,jdbcType=TINYINT},
+      </if>
+      <if test="buyInfo != null" >
+        #{buyInfo,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.BuyExample" resultType="java.lang.Integer" >
+    select count(*) from xt_buy
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update xt_buy
+    <set >
+      <if test="record.pkBid != null" >
+        pk_bid = #{record.pkBid,jdbcType=BIGINT},
+      </if>
+      <if test="record.buyName != null" >
+        buy_name = #{record.buyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.buyTime != null" >
+        buy_time = #{record.buyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.pkUid != null" >
+        pk_uid = #{record.pkUid,jdbcType=BIGINT},
+      </if>
+      <if test="record.isSeasonal != null" >
+        is_seasonal = #{record.isSeasonal,jdbcType=TINYINT},
+      </if>
+      <if test="record.isInStorehouse != null" >
+        is_in_storehouse = #{record.isInStorehouse,jdbcType=TINYINT},
+      </if>
+      <if test="record.buyInfo != null" >
+        buy_info = #{record.buyInfo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update xt_buy
+    set pk_bid = #{record.pkBid,jdbcType=BIGINT},
+      buy_name = #{record.buyName,jdbcType=VARCHAR},
+      buy_time = #{record.buyTime,jdbcType=TIMESTAMP},
+      pk_uid = #{record.pkUid,jdbcType=BIGINT},
+      is_seasonal = #{record.isSeasonal,jdbcType=TINYINT},
+      is_in_storehouse = #{record.isInStorehouse,jdbcType=TINYINT},
+      buy_info = #{record.buyInfo,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update xt_buy
+    set pk_bid = #{record.pkBid,jdbcType=BIGINT},
+      buy_name = #{record.buyName,jdbcType=VARCHAR},
+      buy_time = #{record.buyTime,jdbcType=TIMESTAMP},
+      pk_uid = #{record.pkUid,jdbcType=BIGINT},
+      is_seasonal = #{record.isSeasonal,jdbcType=TINYINT},
+      is_in_storehouse = #{record.isInStorehouse,jdbcType=TINYINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.Buy" >
+    update xt_buy
+    <set >
+      <if test="buyName != null" >
+        buy_name = #{buyName,jdbcType=VARCHAR},
+      </if>
+      <if test="buyTime != null" >
+        buy_time = #{buyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pkUid != null" >
+        pk_uid = #{pkUid,jdbcType=BIGINT},
+      </if>
+      <if test="isSeasonal != null" >
+        is_seasonal = #{isSeasonal,jdbcType=TINYINT},
+      </if>
+      <if test="isInStorehouse != null" >
+        is_in_storehouse = #{isInStorehouse,jdbcType=TINYINT},
+      </if>
+      <if test="buyInfo != null" >
+        buy_info = #{buyInfo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where pk_bid = #{pkBid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.Buy" >
+    update xt_buy
+    set buy_name = #{buyName,jdbcType=VARCHAR},
+      buy_time = #{buyTime,jdbcType=TIMESTAMP},
+      pk_uid = #{pkUid,jdbcType=BIGINT},
+      is_seasonal = #{isSeasonal,jdbcType=TINYINT},
+      is_in_storehouse = #{isInStorehouse,jdbcType=TINYINT},
+      buy_info = #{buyInfo,jdbcType=LONGVARCHAR}
+    where pk_bid = #{pkBid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.edu.ccit.JavaEEsx.zh04.sxcsglxt.model.Buy" >
+    update xt_buy
+    set buy_name = #{buyName,jdbcType=VARCHAR},
+      buy_time = #{buyTime,jdbcType=TIMESTAMP},
+      pk_uid = #{pkUid,jdbcType=BIGINT},
+      is_seasonal = #{isSeasonal,jdbcType=TINYINT},
+      is_in_storehouse = #{isInStorehouse,jdbcType=TINYINT}
+    where pk_bid = #{pkBid,jdbcType=BIGINT}
+  </update>
+</mapper>
