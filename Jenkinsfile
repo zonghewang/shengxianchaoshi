@@ -1,11 +1,10 @@
 pipeline {
-  agent any
-  stages {
-    stage('') {
-      steps {
-        build(quietPeriod: 1, job: 'mvn --version')
-      }
+    agent { docker 'maven:3.3.3' }
+    stages {
+        stage('build') {
+            steps {
+                sh 'mvn --version'
+            }
+        }
     }
-
-  }
 }
